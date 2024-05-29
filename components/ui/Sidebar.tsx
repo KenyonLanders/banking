@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { sidebarLinks } from '@/constants'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import Footer from './Footer'
 
 const Sidebar = ({ user }: SiderbarProps) => {
     const pathname = usePathname ();
@@ -15,8 +16,8 @@ const Sidebar = ({ user }: SiderbarProps) => {
             <Link href="/" className="mb-12 cursor-pointer flex items-center gap-2">
                 <Image
                   src="/icons/gen-logo2.svg"
-                  width={34}
-                  height={34}
+                  width={45}
+                  height={45}
                   alt="Genbank logo"
                   className="size-[50px] max-xl:size-14"  
                 />
@@ -46,7 +47,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
             User
         </nav>
 
-        Footer
+        <Footer user={user} />
     </section>
   )
 }
