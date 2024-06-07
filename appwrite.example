@@ -1,0 +1,99 @@
+Below you will find two codes for appwrite.ts
+
+
+WRONG ONE..... (will cause errors with user.actions.ts with createBankAccount section and you won't be able to link your bank account. Remember, this is a server action.)
+
+"use server";
+
+import { Client, Account, Databases, Users } from "node-appwrite";
+import { cookies } from "next/headers";
+
+export async function createSessionClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
+
+  const session = cookies().get("appwrite-session");
+
+  if (!session || !session.value) {
+    throw new Error("No session");
+  }
+
+  client.setSession(session.value);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get database() {
+        return new Databases(client);
+    },
+    get user() {
+        return new Users(client);
+    }
+  };
+}
+
+export async function createAdminClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+    .setKey(process.env.NEXT_APPWRITE_KEY!);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+  };
+}
+
+
+
+
+
+
+RIGHT ONE..... (You will be able to link your bank account as it passes all the correct information through the server correctly.)
+
+"use server";
+
+import { Client, Account, Databases, Users } from "node-appwrite";
+import { cookies } from "next/headers";
+
+export async function createSessionClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
+
+  const session = cookies().get("appwrite-session");
+
+  if (!session || !session.value) {
+    throw new Error("No session");
+  }
+
+  client.setSession(session.value);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+  };
+}
+
+export async function createAdminClient() {
+  const client = new Client()
+    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+    .setKey(process.env.NEXT_APPWRITE_KEY!);
+
+  return {
+    get account() {
+      return new Account(client);
+    },
+    get database() {
+      return new Databases(client);
+    },
+    get user() {
+      return new Users(client);
+    }
+  };
+}

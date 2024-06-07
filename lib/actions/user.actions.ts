@@ -74,7 +74,7 @@ export const signUp = async ({password, ...userData}: SignUpParams) => {
             secure: true,
         });
 
-        return parseStringify(newUser);
+        return parseStringify(newUserAccount);
     } catch (error) {
         console.error('Error', error);
     }
@@ -86,7 +86,7 @@ export async function getLoggedInUser() {
 
       const user = await account.get();
 
-      return parseStringify(user)
+      return parseStringify(user);
     } catch (error) {
       return null;
     }
@@ -107,7 +107,7 @@ export const logoutAccount = async () => {
 export const createLinkToken = async (user: User) => {
     try {
         const tokenParams = {
-            user: {
+            user: { 
                 client_user_id: user.$id
             },
             client_name: `${user.firstName} ${user.lastName}`,
@@ -130,7 +130,7 @@ export const createBankAccount = async ({
     accountId,
     accessToken,
     fundingSourceUrl,
-    shareableId,
+    sharableId,
 }: createBankAccountProps) => {
    try {
      const { database } = await createAdminClient();
@@ -145,7 +145,7 @@ export const createBankAccount = async ({
             accountId,
             accessToken,
             fundingSourceUrl,
-            shareableId,
+            sharableId,
         }
      )
 
@@ -202,7 +202,7 @@ export const exchangePublicToken = async ({
             accountId: accountData.account_id,
             accessToken,
             fundingSourceUrl,
-            shareableId: encryptId(accountData.account_id),
+            sharableId: encryptId(accountData.account_id),
         });
 
         // Revalidate the path to reflect the changes
